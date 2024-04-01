@@ -12,7 +12,7 @@ class TestBooksCollector:
     def test_add_new_book_negative(self):
         collector = BooksCollector()
         collector.add_new_book('Точка обмана')
-        assert len(collector.books_genre) == 1
+        assert len(collector.get_books_genre()) == 1
 
         # Проверка 2.0
     def test_set_book_genre(self):
@@ -46,7 +46,7 @@ class TestBooksCollector:
         collector.add_new_book('Цифровая крепость')
         collector.set_book_genre('Точка обмана', 'Детективы')
         collector.set_book_genre('Цифровая крепость', 'Фантастика')
-        assert collector.get_book_genre == {'Точка обмана': 'Детективы', 'Цифровая крепость': 'Фантастика'}
+        assert collector.books_genre == {'Точка обмана': 'Детективы', 'Цифровая крепость': 'Фантастика'}
 
             # Проверка 6.0
     def test_get_books_for_children(self):
@@ -64,20 +64,19 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book('Членокио')
         collector.set_book_genre('Членокио', 'Ужасы')
-        books = collector.get_books_for_children()
-        assert books == []
+        assert collector.get_books_for_children() == []
 
             # Проверка 8.0
     def test_add_book_in_favorites(self):
         collector = BooksCollector()
         collector.add_new_book('Точка обмана')
         collector.add_book_in_favorites('Точка обмана')
-        assert collector.favorites == ['Точка обмана']
+        assert collector.get_list_of_favorites_books == ['Точка обмана']
             # Проверка 8.1
     def test_add_book_in_favorites_negative(self):
         collector = BooksCollector()
         collector.add_book_in_favorites('Точка обмана')
-        assert len(collector.favorites) == 1
+        assert len(collector.get_list_of_favorites_books) == 1
 
             # Проверка 9.0
     def test_delete_book_from_favorites(self):
@@ -85,12 +84,12 @@ class TestBooksCollector:
         collector.add_new_book('Точка обмана')
         collector.add_book_in_favorites('Точка обмана')
         collector.delete_book_from_favorites('Точка обмана')
-        assert collector.favorites == []
+        assert collector.get_list_of_favorites_books == []
             # Проверка 9.1
     def test_delete_book_from_favorites_negative(self):
         collector = BooksCollector()
         collector.delete_book_from_favorites('Точка обмана')
-        assert collector.favorites == []
+        assert collector.get_list_of_favorites_books == []
 
             # Проверка 10.0
     def test_get_list_of_favorites_books(self):
@@ -99,8 +98,7 @@ class TestBooksCollector:
         collector.add_new_book('Цифровая крепость')
         collector.add_book_in_favorites('Точка обмана')
         collector.add_book_in_favorites('Цифровая крепость')
-        favorites = collector.get_list_of_favorites_books()
-        assert favorites == ['Точка обмана', 'Цифровая крепость']
+        assert collector.get_list_of_favorites_books == ['Точка обмана', 'Цифровая крепость']
 
             # Проверка 11.0
     def test_add_new_book_duplicate(self):
