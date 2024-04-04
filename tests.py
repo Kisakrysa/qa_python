@@ -1,3 +1,5 @@
+import pytest
+
 from main import BooksCollector
 
 
@@ -46,7 +48,7 @@ class TestBooksCollector:
         collector.add_new_book('Цифровая крепость')
         collector.set_book_genre('Точка обмана', 'Детективы')
         collector.set_book_genre('Цифровая крепость', 'Фантастика')
-        assert collector.books_genre == {'Точка обмана': 'Детективы', 'Цифровая крепость': 'Фантастика'}
+        assert collector.get_books_genre() == {'Точка обмана': 'Детективы', 'Цифровая крепость': 'Фантастика'}
 
             # Проверка 6.0
     def test_get_books_for_children(self):
@@ -71,12 +73,13 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book('Точка обмана')
         collector.add_book_in_favorites('Точка обмана')
-        assert collector.get_list_of_favorites_books == ['Точка обмана']
+        assert collector.get_list_of_favorites_books() == ['Точка обмана']
+        # Я предположила, что ошибка была в том, что я банально () не поставила. Могу ошибаться, но больше я не знаю в чем тут ошибка.
             # Проверка 8.1
     def test_add_book_in_favorites_negative(self):
         collector = BooksCollector()
         collector.add_book_in_favorites('Точка обмана')
-        assert len(collector.get_list_of_favorites_books) == 1
+        assert len(collector.get_list_of_favorites_books()) == 1
 
             # Проверка 9.0
     def test_delete_book_from_favorites(self):
@@ -84,12 +87,12 @@ class TestBooksCollector:
         collector.add_new_book('Точка обмана')
         collector.add_book_in_favorites('Точка обмана')
         collector.delete_book_from_favorites('Точка обмана')
-        assert collector.get_list_of_favorites_books == []
+        assert collector.get_list_of_favorites_books() == []
             # Проверка 9.1
     def test_delete_book_from_favorites_negative(self):
         collector = BooksCollector()
         collector.delete_book_from_favorites('Точка обмана')
-        assert collector.get_list_of_favorites_books == []
+        assert collector.get_list_of_favorites_books() == []
 
             # Проверка 10.0
     def test_get_list_of_favorites_books(self):
@@ -98,7 +101,7 @@ class TestBooksCollector:
         collector.add_new_book('Цифровая крепость')
         collector.add_book_in_favorites('Точка обмана')
         collector.add_book_in_favorites('Цифровая крепость')
-        assert collector.get_list_of_favorites_books == ['Точка обмана', 'Цифровая крепость']
+        assert collector.get_list_of_favorites_books() == ['Точка обмана', 'Цифровая крепость']
 
             # Проверка 11.0
     def test_add_new_book_duplicate(self):
@@ -108,7 +111,7 @@ class TestBooksCollector:
         assert len(collector.get_books_genre()) == 1
 
             # Проверка 12.0
-    import pytest
+
 
     @pytest.mark.parametrize(
         'name,genre',
@@ -122,4 +125,4 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book(name)
         collector.set_book_genre(name, genre)
-        assert collector.get_book_genre(name)
+        assert collector.get_book_genre(name) == genre
